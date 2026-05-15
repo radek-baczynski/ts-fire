@@ -1,6 +1,6 @@
 {
   "name": "ts-fire",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A TypeScript implementation of google/python-fire — automatically generate CLIs from objects and functions",
   "license": "MIT",
   "type": "module",
