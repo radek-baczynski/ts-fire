@@ -37,6 +37,34 @@ async function question(rl, prompt) {
   return a === "y" || a === "yes";
 }
 
+function assertCleanWorkingTree() {
+  const inRepo = git(["rev-parse", "--is-inside-work-tree"]);
+  if (inRepo.status !== 0 || inRepo.stdout?.trim() !== "true") {
+    console.error("Not a git repository (or git failed). Cannot release.");
+    if (inRepo.stderr) console.error(inRepo.stderr);
+    process.exit(1);
+  }
+
+  const status = git(["status", "--porcelain"]);
+  if (status.status !== 0) {
+    console.error("git status failed:");
+    console.error(status.stderr || status.stdout || "(no output)");
+    process.exit(1);
+  }
+
+  const lines = status.stdout?.trim();
+  if (lines) {
+    const count = lines.split("\n").filter(Boolean).length;
+    console.error(
+      `Cannot release: working tree is not clean (${count} uncommitted / untracked path(s)).\n`,
+    );
+    console.error("Details (staged, unstaged, untracked):\n");
+    console.error(status.stdout);
+    console.error("\nCommit or stash everything, then try again.");
+    process.exit(1);
+  }
+}
+
 async function main() {
   const kind = process.argv[2] ?? "patch";
   if (!KINDS.has(kind)) {
@@ -44,13 +72,7 @@ async function main() {
     process.exit(1);
   }
 
-  const status = git(["status", "--porcelain"]);
-  if (status.stdout?.trim()) {
-    console.error("Working tree is not clean. Commit or stash changes before releasing.");
-    process.exit(1);
-  }
-
-  const from = readVersion();
+  assertCleanWorkingTree();
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,

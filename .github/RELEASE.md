@@ -13,7 +13,7 @@ Optional: enable [npm trusted publishing](https://docs.npmjs.com/generating-prov
 
 ## Release workflow (interactive)
 
-Requires a **clean** git working tree.
+Requires a **clean** git working tree (no unstaged edits, staged-but-uncommitted files, or **untracked** files). Uncommitted paths are printed if you try to release anyway.
 
 ```bash
 npm run release           # patch (default): prompts, then bump + optional push
