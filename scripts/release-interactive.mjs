@@ -73,6 +73,8 @@ async function main() {
   }
 
   assertCleanWorkingTree();
+
+  const from = readVersion();
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
