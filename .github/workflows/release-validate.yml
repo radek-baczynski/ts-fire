@@ -16,7 +16,7 @@ jobs:
           cache: npm
 
       - name: Show current version
-        run: node -p "'Current package version: ' + require('./package.json').version"
+        run: node -e "console.log('Current package version:', require('./package.json').version)"
 
       - name: Install, typecheck, build, test
         run: |
