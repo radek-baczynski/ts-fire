@@ -32,8 +32,10 @@ const calculator = {
   },
 };
 
-fire(calculator);
+fire(calculator, { callerUrl: import.meta.url });
 ```
+
+`fire()` runs only when **this file** is the runtime entry script (`node ./calculator.js`). Static or dynamic `import` of that file does **not** run the CLI—the module still loads, but `fire()` returns immediately unless this file’s path matches the process entry. That matches Python’s `if __name__ == "__main__"`. Use **`runFire`** when you want to drive commands from tests or libraries. The **`ts-fire` package itself** has no import-time CLI side effects beyond loading exports.
 
 ```bash
 node calculator.js double --number=15   # 30
@@ -103,9 +105,12 @@ node examples/calculator.mjs double --number=15
 - **Release** runs when you push a semver tag `v*.*.*`: publishes to [npm](https://www.npmjs.com/package/ts-fire) and creates a GitHub Release.
 
 ```bash
-npm run release:patch   # bump version, commit, tag
-git push && git push --tags
+npm run release          # prompts: bump + optional push (default patch)
+npm run release:minor
+npm run release:major
 ```
+
+If you decline the **push** step, the script reverts the local version bump (`git reset` + delete tag).
 
 Setup and full release steps: [.github/RELEASE.md](.github/RELEASE.md).
 

@@ -31,4 +31,4 @@ jobs:
           echo "To release v${VERSION}:"
           echo "  1. Ensure main is green (CI)"
           echo "  2. git tag v${VERSION} && git push origin v${VERSION}"
-          echo "  Or: npm run release:tag (after npm version patch|minor|major)"
+          echo "  Or: npm run release  (interactive bump + push)"

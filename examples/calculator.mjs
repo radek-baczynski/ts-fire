@@ -21,4 +21,4 @@ const calculator = {
   },
 };
 
-fire(calculator);
+fire(calculator, { callerUrl: import.meta.url });

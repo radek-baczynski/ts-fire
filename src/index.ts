@@ -10,3 +10,4 @@ export {
 export { introspect, getProps, scrapeDescription } from "./core/utils";
 export { loadModule, detectRuntime, getArgv, getCwd } from "./runtime/load-module";
 export type { RuntimeId } from "./runtime/detect";
+export { isExecutedAsMainEntry } from "./runtime/main-entry";

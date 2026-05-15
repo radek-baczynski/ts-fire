@@ -45,6 +45,7 @@ async function main(): Promise<void> {
     argv: fireArgv,
     name: programName,
     exitOnError: true,
+    callerUrl: import.meta.url,
   });
 }
 

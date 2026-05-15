@@ -22,6 +22,7 @@ import {
 } from "./resolve-command";
 import type { FireOptions, FireTarget, ParsedArgv } from "./types";
 import { introspect } from "./utils";
+import { isExecutedAsMainEntry } from "../runtime/main-entry";
 
 export interface RunContext {
   programName: string;
@@ -177,6 +178,13 @@ export async function fire(
   target: FireTarget,
   options: FireOptions = {},
 ): Promise<void> {
+  if (options.callerUrl == null) {
+    return;
+  }
+  if (!isExecutedAsMainEntry(options.callerUrl)) {
+    return;
+  }
+
   const write = options.write ?? ((t: string) => console.log(t));
   const writeError = options.writeError ?? ((t: string) => console.error(t));
   const exitOnError = options.exitOnError ?? true;

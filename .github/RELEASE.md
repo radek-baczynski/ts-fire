@@ -11,16 +11,26 @@ Releases use [Semantic Versioning](https://semver.org/) and git tags `vMAJOR.MIN
 
 Optional: enable [npm trusted publishing](https://docs.npmjs.com/generating-provenance-statements) for this repo via GitHub OIDC instead of `NPM_TOKEN`.
 
-## Release workflow
+## Release workflow (interactive)
+
+Requires a **clean** git working tree.
 
 ```bash
-# Bump version (updates package.json + package-lock.json, creates git commit + tag)
-npm run release:patch   # 0.1.0 → 0.1.1
-# or
-npm run release:minor   # 0.1.0 → 0.2.0
-npm run release:major   # 0.1.0 → 1.0.0
+npm run release           # patch (default): prompts, then bump + optional push
+npm run release:minor
+npm run release:major
+```
 
-# Push commit and tag — triggers .github/workflows/release.yml
+1. First prompt: bump version, commit, and tag **locally**. If you answer **no**, nothing changes.
+2. Second prompt: push branch and tag to **origin**. If you answer **no**, the script **reverts** the bump (`git tag -d v…` and `git reset --hard HEAD~1`).
+
+That push triggers [`.github/workflows/release.yml`](workflows/release.yml) (npm publish + GitHub Release when the tag matches `package.json`).
+
+## Release workflow (manual)
+
+```bash
+# Bump version only (no interactive script)
+npm version patch -m "chore: release %s"
 git push && git push --tags
 ```
 

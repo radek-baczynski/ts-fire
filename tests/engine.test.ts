@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { runFire, formatResult } from "../src/core/engine";
+import { runFire, formatResult, fire } from "../src/core/engine";
 import { introspect } from "../src/core/utils";
 
 const calculator = {
@@ -88,5 +88,19 @@ describe("formatResult", () => {
     expect(formatResult(null)).toBeNull();
     expect(formatResult(" hi ")).toBe("hi");
     expect(formatResult({ a: 1 })).toBe('{\n  "a": 1\n}');
+  });
+});
+
+describe("fire", () => {
+  it("no-ops when callerUrl is omitted (safe for imports)", async () => {
+    let written = "";
+    await fire(calculator, {
+      argv: ["double", "--number=2"],
+      exitOnError: false,
+      write: (s) => {
+        written += s;
+      },
+    });
+    expect(written).toBe("");
   });
 });

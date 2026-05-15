@@ -39,10 +39,11 @@
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
     "prepublishOnly": "npm run build",
-    "release:patch": "npm version patch",
-    "release:minor": "npm version minor",
-    "release:major": "npm version major",
-    "release:tag": "node -e \"const v=require('./package.json').version; console.log('git tag v'+v+' && git push origin v'+v)\""
+    "pretest": "npm run build",
+    "release": "node scripts/release-interactive.mjs",
+    "release:patch": "node scripts/release-interactive.mjs patch",
+    "release:minor": "node scripts/release-interactive.mjs minor",
+    "release:major": "node scripts/release-interactive.mjs major",
   },
   "keywords": [
     "cli",
