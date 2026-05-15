@@ -54,12 +54,12 @@
   "author": "Radek Baczyński",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/radek/ts-fire.git"
+    "url": "git+https://github.com/radek-baczynski/ts-fire.git"
   },
   "bugs": {
-    "url": "https://github.com/radek/ts-fire/issues"
+    "url": "https://github.com/radek-baczynski/ts-fire/issues"
   },
-  "homepage": "https://github.com/radek/ts-fire#readme",
+  "homepage": "https://github.com/radek-baczynski/ts-fire#readme",
   "publishConfig": {
     "access": "public",
     "provenance": true
