@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseArgv } from "../src/core/parse-args.ts";
+import { parseArgv } from "../src/core/parse-args";
 
 describe("parseArgv", () => {
   it("parses command segments", () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { detectRuntime } from "../src/runtime/detect.ts";
-import { loadModule } from "../src/runtime/load-module.ts";
+import { detectRuntime } from "../src/runtime/detect";
+import { loadModule } from "../src/runtime/load-module";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 

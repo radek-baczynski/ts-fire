@@ -111,10 +111,11 @@ export async function runInteractiveSession(
       throw new Error("Cannot explore this target interactively");
     }
 
-    const keys = Object.keys(current)
+    const obj = current;
+    const keys = Object.keys(obj)
       .filter((k) => k !== "__description__" && !k.startsWith("_"))
       .filter((k) => {
-        const v = current[k as keyof typeof current];
+        const v = obj[k];
         return isCallable(v) || isPlainObject(v);
       })
       .sort();
@@ -122,7 +123,7 @@ export async function runInteractiveSession(
     const subcommands: SubCommand[] = keys.map((key) => ({
       key,
       description: "",
-      instance: current[key as keyof typeof current],
+      instance: obj[key],
     }));
 
     const selected = await selectSubCommand(subcommands);

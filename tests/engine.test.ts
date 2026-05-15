@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { runFire, formatResult } from "../src/core/engine.ts";
-import { introspect } from "../src/core/utils.ts";
+import { runFire, formatResult } from "../src/core/engine";
+import { introspect } from "../src/core/utils";
 
 const calculator = {
   __description__: "I am a math machine",
@@ -72,8 +72,11 @@ describe("runFire", () => {
 
 describe("introspect", () => {
   it("extracts parameter names and defaults", () => {
-    function sample(a: string, b = 10, c = Math.PI) {}
-    const specs = introspect(sample);
+    const sample = function sample(a: string, b = 10) {
+      void a;
+      void b;
+    };
+    const specs = introspect(sample as (...args: unknown[]) => unknown);
     expect(specs[0]).toBe("a");
     expect(Array.isArray(specs[1])).toBe(true);
     if (Array.isArray(specs[1])) expect(specs[1][0]).toBe("b");

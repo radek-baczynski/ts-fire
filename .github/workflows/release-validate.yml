@@ -18,11 +18,12 @@ jobs:
       - name: Show current version
         run: node -p "'Current package version: ' + require('./package.json').version"
 
-      - name: Install, test, build
+      - name: Install, typecheck, build, test
         run: |
           npm ci
-          npm test
+          npm run typecheck
           npm run build
+          npm test
 
       - name: Release instructions
         run: |
