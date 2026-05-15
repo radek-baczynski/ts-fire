@@ -1,0 +1,33 @@
+name: Release validate
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate release readiness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Show current version
+        run: node -p "'Current package version: ' + require('./package.json').version"
+
+      - name: Install, test, build
+        run: |
+          npm ci
+          npm test
+          npm run build
+
+      - name: Release instructions
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "To release v${VERSION}:"
+          echo "  1. Ensure main is green (CI)"
+          echo "  2. git tag v${VERSION} && git push origin v${VERSION}"
+          echo "  Or: npm run release:tag (after npm version patch|minor|major)"
