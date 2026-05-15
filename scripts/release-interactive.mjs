@@ -15,6 +15,19 @@ function readVersion() {
   return JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version;
 }
 
+/** Next semver for patch | minor | major (matches npm version behavior for x.y.z). */
+function nextVersion(current, kind) {
+  const m = /^(\d+)\.(\d+)\.(\d+)(?:-[\w.]+(?:\+[\w.]+)?)?$/.exec(current);
+  if (!m) return null;
+  let major = Number(m[1]);
+  let minor = Number(m[2]);
+  let patch = Number(m[3]);
+  if (kind === "patch") return `${major}.${minor}.${patch + 1}`;
+  if (kind === "minor") return `${major}.${minor + 1}.0`;
+  if (kind === "major") return `${major + 1}.0.0`;
+  return null;
+}
+
 function git(args, inherit = false) {
   return spawnSync("git", args, {
     encoding: "utf8",
@@ -75,6 +88,7 @@ async function main() {
   assertCleanWorkingTree();
 
   const from = readVersion();
+  const next = nextVersion(from, kind) ?? "next";
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -83,7 +97,7 @@ async function main() {
   try {
     const okBump = await question(
       rl,
-      `\nBump ${kind} (${from} → next), commit, and tag locally? [y/N] `,
+      `\nBump ${kind} (${from} → ${next}), commit, and tag locally? [y/N] `,
     );
     if (!okBump) {
       console.log("Aborted. Version unchanged.");
