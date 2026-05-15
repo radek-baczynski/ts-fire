@@ -32,10 +32,10 @@ const calculator = {
   },
 };
 
-fire(calculator, { callerUrl: import.meta.url });
+fire(calculator, import.meta.url);
 ```
 
-`fire()` runs only when **this file** is the runtime entry script (`node ./calculator.js`). Static or dynamic `import` of that file does **not** run the CLI—the module still loads, but `fire()` returns immediately unless this file’s path matches the process entry. That matches Python’s `if __name__ == "__main__"`. Use **`runFire`** when you want to drive commands from tests or libraries. The **`ts-fire` package itself** has no import-time CLI side effects beyond loading exports.
+`fire(target, import.meta.url)` runs only when **this file** is the runtime entry script (`node ./calculator.js`). Static or dynamic `import` of that file does **not** run the CLI—the module still loads, but `fire()` returns immediately unless this file’s path matches the process entry. That matches Python’s `if __name__ == "__main__"`. Use **`runFire`** when you want to drive commands from tests or libraries. The **`ts-fire` package itself** has no import-time CLI side effects beyond loading exports.
 
 ```bash
 node calculator.js double --number=15   # 30

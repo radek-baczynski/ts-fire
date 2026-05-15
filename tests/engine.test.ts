@@ -92,9 +92,9 @@ describe("formatResult", () => {
 });
 
 describe("fire", () => {
-  it("no-ops when callerUrl is omitted (safe for imports)", async () => {
+  it("no-ops when callerUrl is not the process entry (e.g. imported module)", async () => {
     let written = "";
-    await fire(calculator, {
+    await fire(calculator, import.meta.url, {
       argv: ["double", "--number=2"],
       exitOnError: false,
       write: (s) => {

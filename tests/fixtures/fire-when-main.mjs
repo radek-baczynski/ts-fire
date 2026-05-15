@@ -11,7 +11,6 @@ export const app = {
   },
 };
 
-fire(app, {
-  callerUrl: import.meta.url,
+fire(app, import.meta.url, {
   argv: ["answer"],
 });

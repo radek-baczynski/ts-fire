@@ -176,12 +176,10 @@ export function formatResult(value: unknown): string | null {
 
 export async function fire(
   target: FireTarget,
+  callerUrl: string | URL,
   options: FireOptions = {},
 ): Promise<void> {
-  if (options.callerUrl == null) {
-    return;
-  }
-  if (!isExecutedAsMainEntry(options.callerUrl)) {
+  if (!isExecutedAsMainEntry(callerUrl)) {
     return;
   }
 

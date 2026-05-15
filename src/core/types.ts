@@ -12,12 +12,6 @@ export interface ParsedArgv {
 }
 
 export interface FireOptions {
-  /**
-   * Pass `import.meta.url` from the module that calls `fire()`.
-   * The CLI only runs when that file is the process entry script (e.g. `node ./my-cli.mjs`),
-   * not when the file is imported elsewhere. Required for `fire()` to do anything.
-   */
-  callerUrl?: string | URL;
   /** argv to parse (defaults to process.argv.slice(2)) */
   argv?: string[];
   /** Program name shown in usage (defaults to process.argv[1]) */

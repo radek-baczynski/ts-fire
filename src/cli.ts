@@ -41,11 +41,10 @@ async function main(): Promise<void> {
   }
 
   const programName = `ts-fire ${modulePath.split(/[/\\]/).pop()}`;
-  await fire(target, {
+  await fire(target, import.meta.url, {
     argv: fireArgv,
     name: programName,
     exitOnError: true,
-    callerUrl: import.meta.url,
   });
 }
 
